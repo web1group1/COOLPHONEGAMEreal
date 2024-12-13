@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <title>Hello</title>
+      <link rel="manifest" crossorigin="use-credentials" href="manifest.json" />
+
+        <title>Cool Cards Company</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <style>
+          * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            list-style: none;
+            box-sizing: border-box;
+          }
+
+
+          .MainNav {
+            background-color: #1b1215;
+            width: 360px;
+            height: 30px;
+            position:fixed;
+            z-index: 9;
+          }
+
+          #storebutton {
+            position: absolute;
+            left: 0px;
+            height: 100%;
+            width: 80px;
+            background-color: #ff2063;
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            -webkit-text-stroke-width: .5px;
+            -webkit-text-stroke-color: rgb(218, 218, 237);
+          }
+          
+          #cardlibrarybutton {
+            left: 80px;
+            position: absolute;
+            height: 100%;
+            width: 80px;
+            background-color: #ff2063;
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            -webkit-text-stroke-width: 0.5px;
+            -webkit-text-stroke-color: rgb(218, 218, 237);
+          }
+          
+          #historybutton {
+            left: 160px;
+            position: absolute;
+            height: 100%;
+            width: 80px;
+            background-color: #ff2063;
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            -webkit-text-stroke-width: .5px;
+            -webkit-text-stroke-color: rgb(218, 218, 237);
+          }
+
+          #Container {
+            position: absolute;
+            height: 770px;
+            width: 360px;
+            overflow: hidden;
+            overflow: auto;
+            top: 30px;
+            z-index: 9;
+          }
+
+          #border {
+                position: static;
+                height: 100vh;
+                width: 360px;
+                background-color: #292543;
+                z-index: -10;
+                overflow: hidden;
+                overflow: auto;
+          }
+
+          #goldcounter {
+              color: white;
+              font-family: Verdana, Geneva, Tahoma, sans-serif;
+              word-wrap: break-word;
+              font-weight: bold;
+              -webkit-text-stroke-width: .5px;
+              -webkit-text-stroke-color: rgb(218, 218, 237);
+              position: relative;
+              font-size: 15px;
+              float: right;
+              background-color: #ff2063;
+              height: 100%;
+              width: 50px;
+              text-align: center;
+          }
+
+          .shopdiv1 {
+            width: 100%;
+            height: 100px;
+            background-color: transparent;
+          }
+
+          #Container::-webkit-scrollbar {
+          display: none;
+          
+          }
+
+          #buypopup {
+                position: absolute;
+                top: 800px;
+                height: 75vh;
+                width: 360px;
+                background-color: #c4cae3;
+                z-index: 10;
+                transition: all 0.5s;
+          }
+
+          .countertext {
+                position: relative;
+                left: 7px;
+                top: -50px;
+                color: rgb(255, 220, 81);
+                z-index: 8;
+                font-weight: bold;
+                -webkit-text-stroke-width: 1.5px;
+                -webkit-text-stroke-color: rgb(183, 5, 5);
+                text-shadow: 3px 3px black;
+                background-color: transparent;
+                font-size: 40px;
+                font-family: sans-serif;
+          }
+
+          .inspectionimageresult {
+                position: absolute;
+                width: 160px;
+                height: 240px;
+                top: 0px;
+                left: 0px;
+                background-color: white;
+                border: 1px solid black;
+                z-index: 12;
+          }
+
+          .cardboughtresult {
+            position: relative;
+                width: 100px;
+                height: 150px;
+                top: 0px;
+                left: 0px;
+                background-color: white;
+                border: 1px solid black;
+                z-index: 12;
+          }
+
+          .carddescription {
+            width: 360px;
+            top: 330px;
+            text-align: center;
+            background-color: rgb(0, 0, 0);
+            color: white;
+            position: absolute;
+            font-family: sans-serif;
+            font-size: 20px;
+            padding: 5px;
+          }
+
+          .buttoninspectwin {
+                z-index: 12;
+                float: right;
+          }
+
+          .on {
+            top: 400px;
+          }
+
+          .off {
+            top: 800px;
+          }
+
+          h1 {
+            color: blue;
+          }
+    
+          .card {
+            width: 100px;
+            height: 150px;
+            margin: 10px;
+            background-color: rgb(255, 35, 94);
+            float: left;
+          }
+
+          .inspectedcard {
+            position: absolute;
+            width: 160px;
+            height: 240px;
+            top: 50px;
+            left: 100px;
+            background-color: white;
+            border: 1px solid #000000;
+            z-index: 12;
+          }
+
+    
+          .cardimage {
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100px;
+            height: 150px;
+          }
+
+          .cardimagealt {
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100px;
+            height: 150px;
+            filter: grayscale(100%); 
+          }
+
+          .buyButton {
+            width: 100vw;
+            height: 40px;
+            background-color: #ff2063;
+            border: 3px solid #5b0e25;
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+          }
+    
+          th { 
+            text-align: left;
+          }
+    
+          th, td {
+            border: 1px solid black;
+            text-align: left;
+            padding: 8px 10px;
+          }
+        </style>
+    </head>
+    <body onload="newLoad()" style="overflow: hidden;">
+      <div id="border">
+        <div id="buypopup" class="off" style="top:800px;background-color:#000000bb"></div>
+
+        <div class="MainNav">
+          <button type="button" id="storebutton" onclick="loadStore('store') ">Store</button>
+          <button type="button" id="cardlibrarybutton" onclick="loadCard('home')">Cards</button>
+          <button type="button" id="historybutton" onclick="loadHistory('history')">history</button>
+          <div id="goldcounter"></div>
+        </div>
+
+        <div id="Container"></div>
+        <div id="globalvariablecontainer" class=""></div>
+        <div id="globalvariablecontainer2" class=""></div>
+      </div>
+
+    </body>
+</html>
+
+<script>
+// http://localhost/coolphonegame/index.html?gold=500&inventory=0&page=0&result=&history=&datelog=')
+
+
+//geolocation zone
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+   alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+	var lat = parseFloat(position.coords.latitude);
+	var long = parseFloat(position.coords.longitude);
+
+	var raffles_lat = -6.189283633000518;
+	var raffles_long = 106.8225858920726;
+
+	var McD_lat = -6.186645771350475;
+	var McD_long = 106.82276011441779;
+
+  var distance_arr = [
+	  getDistance(lat,long,raffles_lat,raffles_long),
+	  getDistance(lat,long,McD_lat,McD_long),
+	];
+
+  var xx = closest(distance_arr, 0);
+	if (xx == getDistance(lat,long,raffles_lat,raffles_long)) {
+		var i = 'raffles' + getDistance(lat,long,raffles_lat,raffles_long);
+    locationf = 1;
+	} else if (xx == getDistance(lat,long,McD_lat,McD_long)) {
+		var i = 'McD' + getDistance(lat,long,McD_lat,McD_long);
+    locationf = 2;
+  }
+  console.log(locationf);
+  document.getElementById('globalvariablecontainer2').className = locationf;
+}
+
+  function closest(array, num) {
+  var i = 0;
+  var minDiff = 1000;
+  var ans;
+  for (i in array) {
+    var m = Math.abs(num - array[i]);
+    if (m < minDiff) {
+      minDiff = m;
+      ans = array[i];
+    }
+  }
+  return ans;
+}
+
+function getDistance(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
+
+//everything below this is for the store
+
+
+function CardShopLoad() {
+
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        BuyChest(this);
+      }
+    };
+    xhttp.open('GET', 'data.xml', true);
+    xhttp.send();
+
+    
+//let buyButton = document.getElementById("playbuyaudio");
+//function playBuy() {
+//  let audio = new   Audio("Audio_1.MP3");
+//  audio.playbuyaudio() 
+//}
+
+
+
+
+function BuyChest(john) {
+  // 1. get currunt gold
+  // 2. subtract currunt gold by 25
+  // 3. pull random rarity
+  
+  if (document.getElementById('buypopup').className == 'off') {
+
+
+
+  var pupupy = document.querySelector('#buypopup').style.top;
+  var become = 0;
+
+  var queryString = window.location.search;
+      var urlParams = new URLSearchParams(queryString);
+      var xmlDoc = john.responseXML;
+      var x = xmlDoc.getElementsByTagName('CARD');
+  var totalCard = '';
+  var card = '';
+    var gold = urlParams.get('gold');
+    var curinventory = urlParams.get('inventory');
+    var curhistory = urlParams.get('history');
+    var datelog = urlParams.get('datelog');
+    var totalPull = '';
+    var xmlDoc = john.responseXML;
+    var x = xmlDoc.getElementsByTagName('CARD');
+    var thestorage = '';
+    if (gold >= 25) {
+      gold = gold - 25;
+
+//const rfpool = [0,1,2,3,4,5,6,7,8,9,10]; 0-4 common 5-7 rare 8-9 epic 10 legendary
+//const mcpool = [11,12,13,14,15,16,17,18,19,20,21];
+
+      for (s = 0; s < 3; s++) {
+        var random = Math.floor((Math.random() * 100) + 1);
+        if (random <= 50) {
+          var random = Math.floor(Math.random() * 5);
+  //        alert("c");        if break use this
+  //        alert(random);
+
+        } else if (random <= 85 && random > 50  ) {
+          var random = Math.floor(Math.random() * 3);
+          random = random + 5;
+
+
+        } else if (random <= 95 && random > 85 ) {
+          var random = Math.floor(Math.random() * 2);
+          random = random + 8;
+
+
+        } else if (random <= 100 & random > 95) {
+          random = random = 10;
+
+        }
+//Location ermosta
+
+        if (document.getElementById('globalvariablecontainer2').className == 2) {
+          var thestorage = document.getElementById('globalvariablecontainer2').className;
+          random = random + 11;
+          
+        }
+        
+        var IsPopupOn = 1;
+        card = '<div class="card"><p><img class="cardboughtresult" src="' + x[random].getElementsByTagName('IMAGEID')[0].childNodes[0].nodeValue + '">' + '</p></div>';
+        totalPull = totalPull + ',' + random 
+        totalCard = totalCard + card;
+      }
+      var newdate = new Date ();
+      var newdatelog = newdate.getDate() + "-" + (newdate.getMonth() + 1) + "-" + newdate.getFullYear();
+      var datelog = datelog + "," + newdatelog;
+      
+      document.getElementById('buypopup').innerHTML = totalCard + '<button type="button" onclick="BuyChestResolve(1)">CLAIM</button>';
+      document.getElementById('buypopup').className = 'on';
+      document.getElementById('buypopup').style.top = '200px';
+      thestorage = gold + '.' + curinventory + '.' + totalPull + '.' + curhistory + '.' + datelog
+      document.getElementById('globalvariablecontainer').className = thestorage;
+      //Deduct gold, detect location value, then run RNG function dependant on location - PullChest(locationname)
+      
+    } else {
+      alert("BROKE");
+
+      //Popup notifiying lack of cash, acts like Card Inspection
+    }
+  }
+}
+}
+
+function BuyChestResolve(stupidpenisx) {
+  var thestorage = document.getElementById('globalvariablecontainer').className;
+  stArray = thestorage.split(".");
+  location.replace('?gold=' + stArray[0] + '&inventory=' + stArray[1] + stArray[2] + '&page=' + stupidpenisx + '&result=' + stArray[2]+ '&history=' + stArray[3] + stArray[2]+ '&datelog=' + stArray[4]);
+}
+
+function InspectResolve(stupidpenisx) {
+  var thestorage = document.getElementById('globalvariablecontainer').className;
+  stArray = thestorage.split(".");
+  location.replace('?gold=' + stArray[0] + '&inventory=' + stArray[1] + stArray[2] + '&page=' + stupidpenisx + '&result=' + stArray[2]+ '&history=' + stArray[3] + stArray[2]+ '&datelog=' + stArray[4]);
+}
+  
+function loadStore() {
+  if (document.getElementById('buypopup').className == 'off') {
+      document.getElementById('buypopup').style.backgroundColor = '#000000bb';
+      buyButton = '<div class="shopmenu"><div class="shopdiv1"></div><div class="shopdiv2"></div><div class="buyButton" onclick="CardShopLoad()">Buy</button></div></div><div id="chestresult"></div>'; //add in extra decals after fully created
+      document.getElementById('Container').innerHTML = buyButton;
+  }
+}
+
+
+//everything below this is code for the loading card library
+
+function loadCard() {
+  if (document.getElementById('buypopup').className == 'off') {
+  {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        Card(this);
+      }
+    };
+    xhttp.open('GET', 'data.xml', true);
+    xhttp.send();
+  }
+}
+
+    function Card(john) {
+      var queryString = window.location.search;
+      var urlParams = new URLSearchParams(queryString);
+      var inventory = urlParams.get('inventory');
+      var gold = urlParams.get('gold');
+      var page = urlParams.get('page');
+      var searchArr = inventory.split(",");
+      console.log(searchArr);
+        var facts = 0;
+        let myArray = inventory.split(",");
+        var xmlDoc = john.responseXML;
+        var totalCard = '';
+        var card = '';
+        var x = xmlDoc.getElementsByTagName('CARD');
+        var y = myArray;
+
+        for (i = 0; i < x.length; i++) {
+          var facts = 0;
+          var cardattri = 'cardimagealt';
+          for (j = 0; j < y.length; j++) {
+            if (myArray[j] == x[i].getElementsByTagName('NO')[0].childNodes[0].nodeValue) {
+             facts = facts + 1
+             var cardattri = 'cardimage';
+            }
+          }
+            //card = '<div class="card" onclick = "Cardadder(\''+ i +'\')"><p>' + cardorder + x[i].getElementsByTagName('NAME')[0].childNodes[0].nodeValue + '<img src="' + x[i].getElementsByTagName('IMAGEID')[0].childNodes[0].nodeValue + '">' + '</p><p>'+ facts + ' </p></div>';
+            card = '<div class="card" onclick = "CardInspect(' + i + ')"><img class="' + cardattri + '" src="' + x[i].getElementsByTagName('IMAGEID')[0].childNodes[0].nodeValue + '">' + '<div class="countertext">'+ facts + ' </div></div>';
+            totalCard = totalCard + card; 
+
+        }
+        document.getElementById('Container').innerHTML = totalCard;
+        
+    }
+  }
+
+//everything below this is for the history log
+
+
+function loadHistory() {
+  if (document.getElementById('buypopup').className == 'off') {
+    {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          HistoryList(this);
+        }
+      };
+      xhttp.open('GET', 'data.xml', true);
+      xhttp.send();
+    }
+  }
+  }
+
+function HistoryList(john) {
+    var queryString = window.location.search;
+      var urlParams = new URLSearchParams(queryString);
+      //var inventory = urlParams.get('inventory');
+      //var gold = urlParams.get('gold');
+      //var page = urlParams.get('page');
+      var history = urlParams.get('history');
+      var histArr = history.split(",");
+      var datelog = urlParams.get('datelog');
+      var dateArr = datelog.split(",");
+      histArr.shift();
+      dateArr.shift(); 
+      console.log(histArr);
+      console.log(dateArr);
+        var xmlDoc = john.responseXML;
+        var totalHistorylog = '';
+        var historylog = '';
+        var x = xmlDoc.getElementsByTagName('CARD');
+        var y = histArr;
+        var z = 0;
+        var curElement = 0;
+        var lol = 0;
+        //formation of each entry
+        for (j = 0; j < y.length/3; j++) {
+          var historylog = '';
+            for (d = 0; d < 3; d++) {
+              lol = histArr[curElement];
+              historylog = historylog + '<div class="card"><img class="cardimage" src="' + x[lol].getElementsByTagName('IMAGEID')[0].childNodes[0].nodeValue + '">' + '</p></div>';
+              curElement = curElement + 1;
+            }
+            historylog = historylog + dateArr[j] + '<br>'
+            totalHistorylog = totalHistorylog + historylog
+          }
+  document.getElementById('Container').innerHTML = totalHistorylog;
+}
+  
+//function for card adder window
+//  function Cardadder(x) {
+//    var queryString = window.location.search;
+//    var urlParams = new URLSearchParams(queryString);
+//    var inventory = urlParams.get('inventory');
+//    var gold = urlParams.get('gold');
+//    var page = urlParams.get('page');
+//    var history = urlParams.get('history');
+//    var result = urlParams.get('result');
+//    var searchArr = inventory.split(",");
+//    console.log(searchArr);
+//    var curinventory = urlParams.get('inventory');
+//    location.replace('?gold=' + gold + '&inventory=' + curinventory + ',' + x + '&page=0&result=' + result + '&history=' + history)
+//  }
+
+
+//function for card inspect window
+
+function CardInspect(x) {
+
+  if (document.getElementById('buypopup').className == 'off') {
+    {
+      document.getElementById('globalvariablecontainer').className = x;
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          CardInspect2(this);
+        }
+      };
+      xhttp.open('GET', 'data.xml', true);
+      xhttp.send();
+    }
+  }
+}
+function CardInspect2(john) {
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  var inventory = urlParams.get('inventory');
+  var searchArr = inventory.split(",");
+  var cid = document.getElementById('globalvariablecontainer').className;
+  var facts = 0;
+  const RarityNames = ["Common", "Rare", "Epic", "Legendary"]
+
+
+
+  console.log(searchArr);
+  for (j = 0; j < searchArr.length; j++) {
+            if (searchArr[j] == cid) {
+             facts = facts + 1
+            }
+          }
+    if (facts > 0) {
+    var xmlDoc = john.responseXML;
+    var x = xmlDoc.getElementsByTagName('CARD');
+    document.getElementById('globalvariablecontainer2').className = x[cid].getElementsByTagName('RARITY')[0].childNodes[0].nodeValue;
+
+      cardinspectwindow = '<div class="cardinspectionwin"></div>';
+      card = '<div class="inspectedcard"><p>' + x[cid].getElementsByTagName('NAME')[0].childNodes[0].nodeValue + '<img class="inspectionimageresult" src="' + x[cid].getElementsByTagName('IMAGEID')[0].childNodes[0].nodeValue + '">' + '</p><p>'+ facts + ' </p></div>';
+      document.getElementById('buypopup').innerHTML = cardinspectwindow + '<div class="buttoninspectwin"><button type="button" onclick="InspectmovedownResolve()">X</button></div>' + card + '<div class="carddescription"><p>Name : ' + x[cid].getElementsByTagName('NAME')[0].childNodes[0].nodeValue + '</p><p>Rarity : ' + RarityNames[x[cid].getElementsByTagName('RARITY')[0].childNodes[0].nodeValue] + '</p><p>Origin : ' + x[cid].getElementsByTagName('ORIGIN')[0].childNodes[0].nodeValue  + '</p><p>' + x[cid].getElementsByTagName('DESCRIPTION')[0].childNodes[0].nodeValue + '</p></div><div class="buttonsell"><button type="button" onclick="sellButton()">SELL</button></div>';
+      document.getElementById('buypopup').className = 'on';
+      document.getElementById('buypopup').style.top = '0px';
+      document.getElementById('buypopup').style.height = '100vh';
+      document.getElementById('buypopup').style.backgroundColor = '#000000db';
+
+     }
+}
+
+function sellButton(john) {
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  const raritySell = [35, 40, 80, 175]
+
+  var inventory = urlParams.get('inventory');
+  var gold = urlParams.get('gold');
+  var page = urlParams.get('page');
+  var history = urlParams.get('history');
+  var result = urlParams.get('result');
+  var datelog = urlParams.get('datelog');
+  var searchArr = inventory.split(",");
+
+
+
+
+  const index = searchArr.indexOf(document.getElementById('globalvariablecontainer').className);
+if (index > -1) {
+  searchArr.splice(index, 1);
+  gold = Number(gold) + raritySell[document.getElementById('globalvariablecontainer2').className]
+};
+
+inventory = searchArr.toString();
+
+location.replace('?gold=' + gold + '&inventory=' + inventory + '&page=' + 0 + '&result=' + result + '&history=' + history + '&datelog=' + datelog );
+
+  
+  
+  
+
+}
+
+//pray that this works
+
+
+
+
+function InspectmovedownResolve() {
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  document.getElementById('buypopup').style.top = '800px';
+  document.getElementById('buypopup').className = 'off'
+
+}
+
+
+
+
+//    var searchArr = inventory.split(",");
+//    var curinventory = urlParams.get('inventory');
+    //var queryString = window.location.search;
+    //var urlParams = new URLSearchParams(queryString);
+    //var inventory = urlParams.get('inventory');
+    //var gold = urlParams.get('gold');
+    //var page = urlParams.get('page');
+    //var history = urlParams.get('history');
+    //var result = urlParams.get('result');
+    //var datelog = urlParams.get('datelog');
+
+window.onload = function() {
+  var queryString = window.location.search;
+var urlParams = new URLSearchParams(queryString);
+var inventory = urlParams.get('inventory');
+var gold = urlParams.get('gold');
+var page = urlParams.get('page');
+var searchArr = inventory.split(",");
+document.getElementById('goldcounter').innerHTML = gold;
+console.log(searchArr);
+getLocation();
+    if (page == '0') {
+      loadCard();
+    } else if (page == '1') {
+      loadStore();
+    } else if (page == '2') {
+      loadHistory();
+    };
+}
+
+
+
+
+
+
+</script>
